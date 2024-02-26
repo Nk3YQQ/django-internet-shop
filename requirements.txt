@@ -1,0 +1,5 @@
+django
+ipython
+pillow
+psycopg2
+flake8
