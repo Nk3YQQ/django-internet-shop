@@ -18,7 +18,7 @@
               <div class="card-body">
                 <h5 class="card-title">{{ object.name }}</h5>
                 <p class="card-text">{{ object.amount }} ₽</p>
-                <a href="{% url 'one_good' pk=object.pk %}" class="btn btn-primary">Подробнее</a>
+                <a href="{% url 'shopapp:one_good' pk=object.pk %}" class="btn btn-primary">Подробнее</a>
               </div>
             </div>
         </div>
