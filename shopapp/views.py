@@ -4,7 +4,15 @@ from shopapp.models import Category, Product
 
 
 def index(request):
-    return render(request, 'shopapp/index.html')
+    name = request.GET.get("query")
+    if name:
+        object_list = Product.objects.filter(name__icontains=name)
+    else:
+        object_list = Product.objects.all()
+    context = {
+        "object_list": object_list
+    }
+    return render(request, "shopapp/goods.html", context)
 
 
 def categories(request):
@@ -24,21 +32,8 @@ def get_good(request, pk):
     return render(request, 'shopapp/good.html', context)
 
 
-def get_all_goods(request):
-    name = request.GET.get("query")
-    if name:
-        object_list = Product.objects.filter(name__icontains=name)
-    else:
-        object_list = Product.objects.all()
-    context = {
-        "object_list": object_list
-    }
-    return render(request, "shopapp/goods.html", context)
-
-
-def get_category(request):
-    category_id = request.GET.get('category')
-    products = Product.objects.filter(category_id=category_id)
+def get_category(request, pk):
+    products = Product.objects.filter(category_id=pk)
     context = {
         "object_list": products
     }
@@ -65,5 +60,5 @@ def add_product(request):
             amount=request.POST.get("amount")
 
         )
-        return redirect('all_categories')
+        return redirect('shopapp:all_categories')
     return render(request, "shopapp/add_product.html", context)
