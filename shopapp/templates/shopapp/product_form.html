@@ -1,0 +1,39 @@
+{% extends 'shopapp/base.html' %}
+
+{% block content %}
+<div class="add_header">
+  <h1>Заполните поля для того, чтобы добавить товар</h1>
+</div>
+
+<div>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="nameInput">{{ form.name.label }}</label>
+        <input type="text" class="form-control" id="nameInput" name="{{ form.name.name }}">
+      </div>
+      <div class="mb-3">
+        <label for="contentInput">{{ form.content.label }}</label>
+        <textarea class="form-control" id="contentInput" rows="3" name="{{ form.content.name }}"></textarea>
+      </div>
+      <div class="mb-3">
+        <label for="imageInput" class="form-label">{{ form.image.label }}</label>
+        <input type="file" class="form-control" id="imageInput" name="{{ form.image.name }}">
+      </div>
+      <div class="mb-3">
+        <label for="categoryInput">{{ form.category.label }}*</label>
+        <select id="categoryInput" class="form-control" name="{{ form.category.name }}">
+          <option selected>Выберите...</option>
+          {% for object in object_list %}
+            <option>{{ object.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="amountInput" class="form-label">{{ form.amount.label }}*</label>
+        <input type="number" class="form-control" id="amountInput" name="{{ form.amount.name }}">
+      </div>
+      <button type="submit" class="btn btn-primary">Создать</button>
+    </form>
+</div>
+{% endblock %}
