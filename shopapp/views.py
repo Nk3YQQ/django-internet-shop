@@ -1,64 +1,46 @@
-from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, CreateView
 
 from shopapp.models import Category, Product
+from .forms import ProductForm
 
 
-def index(request):
-    name = request.GET.get("query")
-    if name:
-        object_list = Product.objects.filter(name__icontains=name)
-    else:
-        object_list = Product.objects.all()
-    context = {
-        "object_list": object_list
-    }
-    return render(request, "shopapp/goods.html", context)
+class BaseProductListView(ListView):
+    model = Product
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        name = self.request.GET.get("query")
+        if name:
+            queryset = queryset.filter(name__icontains=name)
+        return queryset
 
 
-def categories(request):
-    context = {
-        "object_list": Category.objects.all()
-    }
-    return render(request, 'shopapp/categories.html', context)
+class ProductListView(BaseProductListView):
+    pass
 
 
-def get_good(request, pk):
-    object_1 = Product.objects.get(pk=pk)
-    category_object = Category.objects.get(pk=object_1.category_id)
-    context = {
-        "object": object_1,
-        "category_object": category_object
-    }
-    return render(request, 'shopapp/good.html', context)
+class ProductCategoryListView(BaseProductListView):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(category_id=self.kwargs.get('pk'))
+        return queryset
 
 
-def get_category(request, pk):
-    products = Product.objects.filter(category_id=pk)
-    context = {
-        "object_list": products
-    }
-    return render(request, "shopapp/filter_goods.html", context)
+class CategoryListView(ListView):
+    model = Category
 
 
-def add_product(request):
-    categories_list = Category.objects.all()
-    context = {
-        "object_list": categories_list
-    }
-    if request.method == "POST":
-        category = request.POST.get("category")
-        content = request.POST.get("content")
-        image = request.FILES.get("image")
-        if not content:
-            content = ''
-        category_name = Category.objects.get(name=category)
-        Product.objects.create(
-            name=request.POST.get("name"),
-            content=content,
-            image=image,
-            category=category_name,
-            amount=request.POST.get("amount")
+class ProductDetailView(DetailView):
+    model = Product
 
-        )
-        return redirect('shopapp:all_categories')
-    return render(request, "shopapp/add_product.html", context)
+
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    success_url = reverse_lazy('shopapp:main')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['object_list'] = Category.objects.all()
+        return context
