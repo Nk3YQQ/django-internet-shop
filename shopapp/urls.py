@@ -1,7 +1,8 @@
 from django.urls import path
 
 from shopapp.apps import ShopappConfig
-from shopapp.views import CategoryListView, ProductDetailView, ProductListView, ProductCategoryListView, ProductCreateView
+from shopapp.views import (CategoryListView, ProductDetailView, ProductListView, ProductCategoryListView,
+                           ProductCreateView)
 
 app_name = ShopappConfig.name
 
