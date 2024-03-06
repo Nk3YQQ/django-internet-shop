@@ -9,7 +9,7 @@
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="mb-3">
-        <label for="nameInput">{{ form.name.label }}</label>
+        <label for="nameInput">{{ form.name.label }}*</label>
         <input type="text" class="form-control" id="nameInput" name="{{ form.name.name }}">
       </div>
       <div class="mb-3">
@@ -24,8 +24,8 @@
         <label for="categoryInput">{{ form.category.label }}*</label>
         <select id="categoryInput" class="form-control" name="{{ form.category.name }}">
           <option selected>Выберите...</option>
-          {% for object in object_list %}
-            <option>{{ object.name }}</option>
+          {% for category in category_list %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
           {% endfor %}
         </select>
       </div>
