@@ -8,4 +8,4 @@ register = template.Library()
 def mymedia(val):
     if val:
         return f'/media/{val}'
-    return '#'
+    return '/media/shopapp/not_found.jpeg'
