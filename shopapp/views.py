@@ -42,5 +42,5 @@ class ProductCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['object_list'] = Category.objects.all()
+        context['category_list'] = Category.objects.all()
         return context
