@@ -1,0 +1,22 @@
+{% extends 'shopapp/base.html' %}
+{% load blog_tags %}
+{% block content %}
+<div class="row">
+    {% for object in object_list %}
+    <div class="col-4">
+        <div class="card" style="width: 18rem;">
+          <img class="displayed_img" src="{{ object.preview| mymedia }}">
+          <div class="card-body">
+            <h5 class="card-title">{{ object.title }}</h5>
+            <a href="{% url 'blogapp:one_material' object.pk %}" class="btn btn-primary">Подробнее</a>
+            <a href="{% url 'blogapp:edit_material' object.pk %}" class="btn btn-info">Изменить</a>
+            <a href="{% url 'blogapp:delete_material' object.pk %}" class="btn btn-danger mt-2">Удалить</a>
+            <a href="{% url 'blogapp:toggle_material' object.pk %}" class="btn btn-warning mt-2">Деактивировать</a>
+          </div>
+        </div>
+    </div>
+    {% empty %}
+        <h2 class="header">Блог не найден</h2>
+    {% endfor %}
+</div>
+{% endblock %}
