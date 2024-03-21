@@ -8,22 +8,20 @@
 </div>
 <div class="row">
     {% for object in object_list %}
-    <div class="col-4">
+    <div class="col-4 mb-3">
         <div class="card" style="width: 18rem;">
-            {% if object.image %}
-            <img class="displayed_img" src="{{ object.image| mymedia }}">
-            {% else %}
-            <img class="displayed_img" src="/media/shopapp/not_found.jpeg">
-            {% endif %}
-          <div class="card-body">
-            <h5 class="card-title">{{ object.name }}</h5>
-            <p class="card-text">{{ object.amount }} ₽</p>
-            <a href="{% url 'shopapp:one_good' pk=object.pk %}" class="btn btn-primary">Подробнее</a>
-          </div>
+            <img class="displayed_img" src="{{ object.image|mymedia }}">
+            <div class="card-body">
+                <h5 class="card-title mt-2">{{ object.name }}</h5>
+                <p class="card-text">{{ object.amount }} ₽</p>
+                <p class="card-text">{{ object.version.name|check_version }}</p>
+                <a href="{% url 'shopapp:one_good' pk=object.pk %}" class="btn btn-primary btn-block">Подробнее</a>
+                <a href="{% url 'shopapp:product_edit' pk=object.pk %}" class="btn btn-outline-primary btn-block mt-2">Редактировать</a>
+            </div>
         </div>
     </div>
     {% empty %}
-        <h2 class="header">Товары не найдены</h2>
+    <h2 class="header">Товары не найдены</h2>
     {% endfor %}
 </div>
 {% endblock %}
