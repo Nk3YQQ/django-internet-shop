@@ -6,15 +6,9 @@
 </div>
 <div class="good">
     <div class="row">
-        {% if object.image %}
         <div class="col-6">
             <img class="good_logo" src="{{ object.image| mymedia }}">
         </div>
-        {% else %}
-        <div class="col-6">
-            <img class="good_logo" src="/media/shopapp/404.jpeg">
-        </div>
-        {% endif %}
         <div class="col-6">
             <h4><b>Характеристики:</b></h4>
             <div class="description">
