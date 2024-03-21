@@ -1,5 +1,6 @@
 {% extends 'shopapp/base.html' %}
 
+{% load my_tags %}
 
 {% block content %}
 <div class="row">
@@ -9,10 +10,7 @@
             <div class="card mb-4 box-shadow">
                 <div class="card-body">
                     <h1 class="card-title pricing-card-title">{{ object.name|title }}</h1>
-                    {% if object.image %}
-                    <img class="displayed_img" src="/media/{{ object.image }}">
-                    {% else %}
-                    <img class="displayed_img" src="/media/shopapp/not_found.jpeg">
+                    <img class="displayed_img" src="/media/{{ object.image|mymedia }}">
                     {% endif %}
                     <p class="card-text">{{ object.content }}</p>
                     <a href="{% url 'shopapp:one_category' pk=object.pk %}"><button type="button" class="btn btn-lg btn-block btn-primary">Посмотреть</button></a>
