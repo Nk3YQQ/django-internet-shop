@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'crispy_forms',
+    'crispy_bootstrap4',
+
     'shopapp',
     'blogapp',
 ]
@@ -142,3 +145,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'skypro.test.testov@yandex.ru'
 EMAIL_HOST_PASSWORD = 'vqfqbjqhqvxskreu'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+FORBIDDEN_WORDS = ['казино', 'криптовалюта', 'крипта', 'биржа', 'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
