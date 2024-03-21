@@ -1,39 +1,39 @@
 {% extends 'shopapp/base.html' %}
 
-{% block content %}
-<div class="add_header">
-  <h1>Заполните поля для того, чтобы добавить товар</h1>
-</div>
+{% load crispy_forms_tags %}
+{% load my_tags %}
 
-<div>
+{% block content %}
+<div class="col-12">
     <form method="post" enctype="multipart/form-data">
-      {% csrf_token %}
-      <div class="mb-3">
-        <label for="nameInput">{{ form.name.label }}*</label>
-        <input type="text" class="form-control" id="nameInput" name="{{ form.name.name }}">
-      </div>
-      <div class="mb-3">
-        <label for="contentInput">{{ form.content.label }}</label>
-        <textarea class="form-control" id="contentInput" rows="3" name="{{ form.content.name }}"></textarea>
-      </div>
-      <div class="mb-3">
-        <label for="imageInput" class="form-label">{{ form.image.label }}</label>
-        <input type="file" class="form-control" id="imageInput" name="{{ form.image.name }}">
-      </div>
-      <div class="mb-3">
-        <label for="categoryInput">{{ form.category.label }}*</label>
-        <select id="categoryInput" class="form-control" name="{{ form.category.name }}">
-          <option selected>Выберите...</option>
-          {% for category in category_list %}
-            <option value="{{ category.id }}">{{ category.name }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="mb-3">
-        <label for="amountInput" class="form-label">{{ form.amount.label }}*</label>
-        <input type="number" class="form-control" id="amountInput" name="{{ form.amount.name }}">
-      </div>
-      <button type="submit" class="btn btn-primary">Создать</button>
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header" align="center">
+                        <h3>{{ object|edit_or_create_good }}</h3>
+                    </div>
+                    <div class="card-body">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">{{ object|edit_or_create_button }}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header" align="center">
+                        <h3>Версии</h3>
+                    </div>
+                    <div class="card-body">
+                        {{ formset.management_form }}
+                        {% for form in formset.forms %}
+                        {{ form|crispy }}
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">Создать</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
 {% endblock %}
