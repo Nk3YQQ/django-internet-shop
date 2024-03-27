@@ -6,8 +6,10 @@
 {% block content %}
 <div class="col-12">
     <form method="post" enctype="multipart/form-data">
+        {% if object %}
         <div class="row">
             <div class="col-6">
+        {% endif %}
                 <div class="card">
                     <div class="card-header" align="center">
                         <h3>{{ object|edit_or_create_good }}</h3>
@@ -19,20 +21,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="card">
-                    <div class="card-header" align="center">
-                        <h3>Версии</h3>
-                    </div>
-                    <div class="card-body">
-                        {{ formset.management_form }}
-                        {% for form in formset.forms %}
-                        {{ form|crispy }}
-                        {% endfor %}
-                        <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">Создать</button>
-                    </div>
-                </div>
-            </div>
+            {% if object %}
+            {% include 'shopapp/includes/inc_shopapp_inline_factory.html' %}
+            {% endif %}
         </div>
     </form>
 </div>
