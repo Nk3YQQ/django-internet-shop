@@ -13,7 +13,7 @@ def mymedia(val):
 @register.filter()
 def edit_or_create_button(obj):
     if obj:
-        return 'Редактировать'
+        return 'Сохранить'
     return 'Создать'
 
 
@@ -29,3 +29,10 @@ def check_version(obj):
     if obj:
         return f'Название версии: {obj}'
     return 'Название версии: -'
+
+
+@register.filter()
+def check_content_or_owner(obj):
+    if obj:
+        return obj[:100]
+    return 'Отсутствует'
