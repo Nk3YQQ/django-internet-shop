@@ -1,27 +1,26 @@
 {% extends 'shopapp/base.html' %}
 {% load my_tags %}
 {% block content %}
-<div class="header">
-    <h1>{{ object.name }}</h1>
-</div>
-<div class="good">
+<div class="col-12">
     <div class="row">
-        <div class="col-6">
+        <div class="col-6" align="center">
             <img class="good_logo" src="{{ object.image| mymedia }}">
         </div>
         <div class="col-6">
-            <h4><b>Характеристики:</b></h4>
-            <div class="description">
-                <p>Цена: {{ object.amount }} рублей</p>
-                <p>Категория: {{ category_object.name }}</p>
-                {% if object.content %}
-                <p>Описание: {{ object.content|slice:100 }}</p>
-                {% else %}
-                <p>Описание: Отсутствует</p>
-                {% endif %}
-            </div>
-            <div class="buy">
-                <a href="#" class="btn btn-primary btn-lg">Купить</a>
+            <div class="card">
+                <div class="card-header">
+                    <h4 align="center"><b>Характеристики</b></h4>
+                </div>
+                <div class="card-body">
+                    <p><b>Название:</b> {{ object.name }} </p>
+                    <p><b>Цена:</b> {{ object.amount }} ₽</p>
+                    <p><b>Категория:</b> {{ object.category.name }}</p>
+                    <p><b>Описание:</b> {{ object.content|check_content_or_owner }}</p>
+                    <p><b>Владелец:</b> {{ object.user|check_content_or_owner }}</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary btn-block">Купить</a>
+                </div>
             </div>
         </div>
     </div>
