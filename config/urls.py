@@ -22,7 +22,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('shopapp.urls', namespace='shopapp')),
-    path('materials/', include('blogapp.urls', namespace='blogapp'))
+    path('materials/', include('blogapp.urls', namespace='blogapp')),
+    path('users/', include('users.urls', namespace='users'))
 ]
 
 if settings.DEBUG:
