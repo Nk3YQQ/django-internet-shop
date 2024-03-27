@@ -1,22 +1,25 @@
 {% extends 'shopapp/base.html' %}
 {% load blog_tags %}
 {% block content %}
-<div class="row">
-    {% for object in object_list %}
-    <div class="col-4">
-        <div class="card" style="width: 18rem;">
-          <img class="displayed_img" src="{{ object.preview| mymedia }}">
-          <div class="card-body">
-            <h5 class="card-title">{{ object.title }}</h5>
-            <a href="{% url 'blogapp:one_material' object.pk %}" class="btn btn-primary">Подробнее</a>
-            <a href="{% url 'blogapp:edit_material' object.pk %}" class="btn btn-info">Изменить</a>
-            <a href="{% url 'blogapp:delete_material' object.pk %}" class="btn btn-danger mt-2">Удалить</a>
-            <a href="{% url 'blogapp:toggle_material' object.pk %}" class="btn btn-warning mt-2">Деактивировать</a>
-          </div>
+<div class="col-12">
+    <div class="row">
+        {% for object in object_list %}
+        <div class="col-6">
+            <div class="card">
+                <img class="displayed_img mt-3" src="{{ object.preview| mymedia }}">
+                <div class="card-title mt-4">
+                    <a href="{% url 'blogapp:one_material' object.pk %}" class="card-title"><h5 align="center">{{ object.title }}</h5></a>
+                </div>
+                <div class="card-footer" align="center">
+                    <a href="{% url 'blogapp:edit_material' object.pk %}" class="btn btn-info mt-2 mr-2">Изменить</a>
+                    <a href="{% url 'blogapp:toggle_material' object.pk %}" class="btn btn-warning mt-2 mr-2">Деактивировать</a>
+                    <a href="{% url 'blogapp:delete_material' object.pk %}" class="btn btn-danger mt-2">Удалить</a>
+                </div>
+            </div>
         </div>
+        {% empty %}
+        <h2 class="header">Статьи не найдены</h2>
+        {% endfor %}
     </div>
-    {% empty %}
-        <h2 class="header">Блог не найден</h2>
-    {% endfor %}
 </div>
 {% endblock %}

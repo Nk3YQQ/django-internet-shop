@@ -1,0 +1,16 @@
+{% load my_tags %}
+
+<div class="col-3">
+    <div class="card">
+        <div class="card-body">
+            <div class="avatar mb-2">
+                <img src="{{ user.avatar|mymedia }}" alt="Avatar"><br>
+            </div>
+            <h5 class="card-text"><b>{{ user.first_name }}</b></h5>
+            <h5 class="card-text"><b>{{ user.last_name }}</b></h5>
+            <a href="{% url 'users:edit' %}" class="card-text">Редактировать</a>
+            <a href="{% url 'users:user_products' %}" class="btn btn-light mt-4">Мои товары</a>
+            <a href="{% url 'users:user_materials' %}" class="btn btn-light mt-2">Мои статьи</a>
+        </div>
+    </div>
+</div>

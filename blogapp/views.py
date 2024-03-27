@@ -4,10 +4,12 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 
+from blogapp.forms import BlogFrom
 from blogapp.models import Blog
+from shopapp.views import LoginRequiredMixin
 
 
-class MaterialListView(ListView):
+class MaterialListView(LoginRequiredMixin, ListView):
     model = Blog
 
     def get_queryset(self):
@@ -16,27 +18,33 @@ class MaterialListView(ListView):
         return queryset
 
 
-class MaterialDetailView(DetailView):
+class UserMaterialListView(MaterialListView):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user_id=self.request.user)
+        return queryset
+
+
+class MaterialDetailView(LoginRequiredMixin, DetailView):
     model = Blog
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
-        print(self.object.preview)
         self.object.view_count += 1
         if self.object.view_count == 100:
             send_mail('Поздравляем со 100 просмотрами!',
                       f'Ваше объявление "{self.object.title}" достигло 100 просмотров!',
                       'skypro.test.testov@yandex.ru',
-                      ['nkirishima@mail.ru'],
+                      [self.request.user],
                       fail_silently=False
                       )
         self.object.save()
         return self.object
 
 
-class MaterialCreateView(CreateView):
+class MaterialCreateView(LoginRequiredMixin, CreateView):
     model = Blog
-    fields = ('title', 'body', 'preview', 'is_published')
+    form_class = BlogFrom
     success_url = reverse_lazy('blogapp:main')
 
     def form_valid(self, form):
@@ -48,7 +56,7 @@ class MaterialCreateView(CreateView):
         return super().form_valid(form)
 
 
-class MaterialUpdateView(UpdateView):
+class MaterialUpdateView(LoginRequiredMixin, UpdateView):
     model = Blog
     fields = ('title', 'body', 'preview')
 
@@ -56,7 +64,7 @@ class MaterialUpdateView(UpdateView):
         return reverse('blogapp:one_material', args=[self.kwargs.get('pk')])
 
 
-class MaterialDeleteView(DeleteView):
+class MaterialDeleteView(LoginRequiredMixin, DeleteView):
     model = Blog
     success_url = reverse_lazy('blogapp:main')
 
