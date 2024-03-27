@@ -1,9 +1,14 @@
+from django.contrib.auth.mixins import LoginRequiredMixin as BaseLoginRequiredMixin
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from shopapp.models import Category, Product, Version
 from .forms import ProductForm, VersionForm
+
+
+class LoginRequiredMixin(BaseLoginRequiredMixin):
+    login_url = reverse_lazy('users:login')
 
 
 class BaseProductListView(ListView):
@@ -36,26 +41,40 @@ class ProductCategoryListView(BaseProductListView):
         return queryset
 
 
-class CategoryListView(ListView):
+class UserProducts(BaseProductListView):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(user_id=self.request.user)
+        return queryset
+
+
+class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
-    success_url = reverse_lazy('shopapp:main')
+    success_url = reverse_lazy('users:user_products')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category_list'] = Category.objects.all()
         return context
 
+    def form_valid(self, form):
+        self.object = form.save()
+        self.object.user = self.request.user
+        self.object.save()
 
-class ProductUpdateView(UpdateView):
+        return super().form_valid(form)
+
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
 
