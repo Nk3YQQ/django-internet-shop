@@ -1,7 +1,7 @@
 {% load static %}
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
@@ -16,30 +16,31 @@
     <link href="{% static 'css/pricing.css' %}" rel="stylesheet">
     <link href="{% static 'css/newstyles.css' %}" rel="stylesheet">
     <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+</head>
 
-  </head>
-
-  <body>
-    {% include 'shopapp/includes/inc_shopapp_menu.html' %}
-    <div class="container">
-      {% block content %}
-      {% endblock %}
-      {% include 'shopapp/includes/inc_shopapp_under.html' %}
-    </div>
+<body>
+{% include 'shopapp/includes/inc_shopapp_menu.html' %}
+<div class="container">
+    {% block content %}
+    {% endblock %}
+    {% include 'shopapp/includes/inc_shopapp_under.html' %}
+</div>
 
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="{% static 'js/popper.min.js' %}"></script>
-    <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/holder.min.js' %}"></script>
-    <script>
-      Holder.addTheme('thumb', {
-        bg: '#55595c',
-        fg: '#eceeef',
-        text: 'Thumbnail'
-      });
-    </script>
-  </body>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{% static 'js/bootstrap.slim.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/holder.min.js' %}"></script>
+<script>
+    Holder.addTheme('thumb', {
+      bg: '#55595c',
+      fg: '#eceeef',
+      text: 'Thumbnail'
+    });
+</script>
+</body>
 </html>
