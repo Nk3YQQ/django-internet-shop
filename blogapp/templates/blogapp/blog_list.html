@@ -10,16 +10,41 @@
                 <div class="card-title mt-4">
                     <a href="{% url 'blogapp:one_material' object.pk %}" class="card-title"><h5 align="center">{{ object.title }}</h5></a>
                 </div>
+                {% if perms.blogapp.change_blog %}
                 <div class="card-footer" align="center">
                     <a href="{% url 'blogapp:edit_material' object.pk %}" class="btn btn-info mt-2 mr-2">Изменить</a>
                     <a href="{% url 'blogapp:toggle_material' object.pk %}" class="btn btn-warning mt-2 mr-2">Деактивировать</a>
+                    {% if perms.blogapp.delete_blog %}
                     <a href="{% url 'blogapp:delete_material' object.pk %}" class="btn btn-danger mt-2">Удалить</a>
+                    {% endif %}
                 </div>
+                {% endif %}
             </div>
         </div>
         {% empty %}
         <h2 class="header">Статьи не найдены</h2>
         {% endfor %}
     </div>
+    {% if user|is_content_manager %}
+    <h2 class="mt-3 mb-3">Скрытые статьи</h2>
+    <div class="row">
+        {% for hidden_object in hidden_objects %}
+        <div class="col-6 mb-3">
+            <div class="card text-muted">
+                <img class="displayed_img mt-3" src="{{ hidden_object.preview| mymedia }}">
+                <div class="card-title mt-4">
+                    <a href="{% url 'blogapp:one_material' hidden_object.pk %}" class="card-title"><h5 align="center">{{ hidden_object.title }}</h5></a>
+                </div>
+                <div class="card-footer" align="center">
+                    <a href="{% url 'blogapp:toggle_material' hidden_object.pk %}" class="btn btn-warning mt-2 mr-2">Активировать</a>
+                    {% if perms.blogapp.delete_blog %}
+                    <a href="{% url 'blogapp:delete_material' hidden_object.pk %}" class="btn btn-danger mt-2">Удалить</a>
+                </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 </div>
 {% endblock %}
