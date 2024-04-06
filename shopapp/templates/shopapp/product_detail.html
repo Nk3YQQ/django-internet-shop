@@ -1,7 +1,7 @@
 {% extends 'shopapp/base.html' %}
 {% load my_tags %}
 {% block content %}
-<div class="col-12">
+<div class="col-12 mt-5">
     <div class="row">
         <div class="col-6" align="center">
             <img class="good_logo" src="{{ object.image| mymedia }}">
@@ -15,8 +15,8 @@
                     <p><b>Название:</b> {{ object.name }} </p>
                     <p><b>Цена:</b> {{ object.amount }} ₽</p>
                     <p><b>Категория:</b> {{ object.category.name }}</p>
-                    <p><b>Описание:</b> {{ object.content|check_content_or_owner }}</p>
-                    <p><b>Владелец:</b> {{ object.user|check_content_or_owner }}</p>
+                    <p><b>Описание:</b> {{ object.content|check_content }}</p>
+                    <p><b>Владелец:</b> {{ object.user|check_owner }}</p>
                 </div>
                 <div class="card-footer">
                     <a href="#" class="btn btn-primary btn-block">Купить</a>
