@@ -15,8 +15,11 @@
                 <h5 class="card-title mt-2">{{ object.name }}</h5>
                 <p class="card-text">{{ object.amount }} ₽</p>
                 <p class="card-text">{{ object.version.name|check_version }}</p>
-                <a href="{% url 'shopapp:one_good' pk=object.pk %}" class="btn btn-primary btn-block">Подробнее</a>
-                <a href="{% url 'shopapp:product_edit' pk=object.pk %}" class="btn btn-outline-primary btn-block mt-2">Редактировать</a>
+                <a href="{% url 'shopapp:one_good' object.pk %}" class="btn btn-primary btn-block">Подробнее</a>
+                {% if perms.shopapp.change_product %}
+                <a href="{% url 'shopapp:product_edit' object.pk %}" class="btn btn-outline-primary btn-block mt-2">Редактировать</a>
+                <a href="{% url 'shopapp:toggle_material' object.pk %}" class="btn btn-outline-warning btn-block mt-2">Деактивировать</a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -24,4 +27,23 @@
     <h2 class="header mt-4">Товары не найдены</h2>
     {% endfor %}
 </div>
+{% if user|is_moderator %}
+<h2 class="mt-3 mb-3">Скрытые продукты</h2>
+<div class="row">
+    {% for hidden_object in hidden_objects %}
+    <div class="col-4 mb-3">
+        <div class="card text-muted" style="width: 18rem;">
+            <img class="hidden_img" src="{{ hidden_object.image|mymedia }}">
+            <div class="card-body">
+                <h5 class="card-title mt-2">{{ hidden_object.name }}</h5>
+                <p class="card-text">{{ hidden_object.amount }} ₽</p>
+                <p class="card-text">{{ hidden_object.version.name|check_version }}</p>
+                <a href="{% url 'shopapp:toggle_material' hidden_object.pk %}"
+                   class="btn btn-outline-warning btn-block mt-2">Активировать</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
 {% endblock %}
