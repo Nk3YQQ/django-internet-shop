@@ -1,4 +1,5 @@
 from django import template
+from django.contrib.auth.models import Group
 
 register = template.Library()
 
@@ -32,7 +33,20 @@ def check_version(obj):
 
 
 @register.filter()
-def check_content_or_owner(obj):
+def check_content(obj):
     if obj:
         return obj[:100]
     return 'Отсутствует'
+
+
+@register.filter()
+def check_owner(obj):
+    if obj:
+        return obj
+    return 'Отсутствует'
+
+
+@register.filter()
+def is_moderator(user):
+    moderator_group = Group.objects.get(name='Модератор')
+    return moderator_group in user.groups.all()
