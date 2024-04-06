@@ -17,6 +17,7 @@ class Product(models.Model):
     )
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, null=True, verbose_name='Дата последнего изменения')
+    is_published = models.BooleanField(default=True, verbose_name='Опубликован')
 
     user = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name='Продукт', **NULLABLE)
 
