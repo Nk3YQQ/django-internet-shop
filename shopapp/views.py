@@ -1,5 +1,8 @@
-from django.contrib.auth.mixins import LoginRequiredMixin as BaseLoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.forms import inlineformset_factory
+from django.http import Http404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
@@ -7,15 +10,12 @@ from shopapp.models import Category, Product, Version
 from .forms import ProductForm, VersionForm
 
 
-class LoginRequiredMixin(BaseLoginRequiredMixin):
-    login_url = reverse_lazy('users:login')
-
-
-class BaseProductListView(ListView):
+class BaseProductListView(LoginRequiredMixin, ListView):
     model = Product
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        queryset = queryset.filter(is_published=True)
         name = self.request.GET.get("query")
         if name:
             queryset = queryset.filter(name__icontains=name)
@@ -23,6 +23,11 @@ class BaseProductListView(ListView):
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
+
+        hidden_objects = Product.objects.filter(is_published=False)
+
+        context_data['user'] = self.request.user
+        context_data['hidden_objects'] = hidden_objects
 
         for product in context_data.get('object_list'):
             product.version = product.version_set.filter(is_current_version=True).first()
@@ -74,9 +79,16 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(LoginRequiredMixin, UpdateView):
+class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
+    permission_required = 'shopapp.change_product'
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        if self.object.user != self.request.user and not self.request.user.is_staff:
+            raise Http404
+        return self.object
 
     def get_success_url(self):
         return reverse('shopapp:product_edit', args=[self.kwargs.get('pk')])
@@ -99,3 +111,15 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
             formset.instance = self.object
             formset.save()
         return super().form_valid(form)
+
+
+@login_required
+def toggle_material(request, pk):
+    material = get_object_or_404(Product, pk=pk)
+    if material.is_published:
+        material.is_published = False
+    else:
+        material.is_published = True
+
+    material.save()
+    return redirect(reverse('shopapp:main'))
