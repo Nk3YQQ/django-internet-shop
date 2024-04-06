@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
@@ -16,6 +17,16 @@ class MaterialListView(LoginRequiredMixin, ListView):
         queryset = super().get_queryset()
         queryset = queryset.filter(is_published=True)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data()
+
+        hidden_objects = Blog.objects.filter(is_published=False)
+
+        context_data['user'] = self.request.user
+        context_data['hidden_objects'] = hidden_objects
+
+        return context_data
 
 
 class UserMaterialListView(MaterialListView):
@@ -56,8 +67,9 @@ class MaterialCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class MaterialUpdateView(LoginRequiredMixin, UpdateView):
+class MaterialUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Blog
+    permission_required = 'blogapp.change_material'
     fields = ('title', 'body', 'preview')
 
     def get_success_url(self):
