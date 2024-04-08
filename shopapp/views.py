@@ -8,6 +8,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 
 from shopapp.models import Category, Product, Version
 from .forms import ProductForm, VersionForm
+from .services import get_cache_for_product_detail, get_cache_for_category
 
 
 class BaseProductListView(LoginRequiredMixin, ListView):
@@ -56,9 +57,25 @@ class UserProducts(BaseProductListView):
 class CategoryListView(LoginRequiredMixin, ListView):
     model = Category
 
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+
+        object_list = get_cache_for_category(self.get_queryset())
+        context_data['object_list'] = object_list
+
+        return context_data
+
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+
+        product = get_cache_for_product_detail(self.object, self.object.pk)
+        context_data['object'] = product
+
+        return context_data
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
