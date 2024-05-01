@@ -1,7 +1,7 @@
 django
 flake8
 pillow
-psycopg2
+psycopg2-binary
 pytils
 django-crispy-forms
 crispy-bootstrap4
