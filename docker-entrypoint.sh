@@ -19,4 +19,4 @@ else
 fi
 
 # Start Django server
-python manage.py runserver 0.0.0.0:8000
+python manage.py runserver 0.0.0.0:10000
