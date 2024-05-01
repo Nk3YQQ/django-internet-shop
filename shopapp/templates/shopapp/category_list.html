@@ -1,0 +1,22 @@
+{% extends 'shopapp/base.html' %}
+
+{% load my_tags %}
+
+{% block content %}
+<div class="row">
+    {% for object in object_list %}
+    <div class="col-4">
+        <div class="card-deck mb-3 text-center">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <h1 class="card-title pricing-card-title">{{ object.name|title }}</h1>
+                    <img class="displayed_img" src="{{ object.image|mymedia }}">
+                    <p class="card-text">{{ object.content }}</p>
+                    <a href="{% url 'shopapp:one_category' pk=object.pk %}"><button type="button" class="btn btn-lg btn-block btn-primary">Посмотреть</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

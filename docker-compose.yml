@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  pgdb:
+    image: postgres:latest
+    container_name: pgdb
+    env_file:
+      - ./.env
+    volumes:
+      - pgdbdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:latest
+    container_name: redis_server
+    expose:
+      - 6379
+
+  app:
+    build: .
+    container_name: app
+    command: ./docker-entrypoint.sh
+    env_file:
+      - ./.env
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - pgdb
+      - redis
+
+volumes:
+  pgdbdata: null

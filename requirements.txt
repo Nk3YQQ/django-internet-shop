@@ -1,5 +1,9 @@
 django
-ipython
-pillow
-psycopg2
 flake8
+pillow
+psycopg2-binary
+pytils
+django-crispy-forms
+crispy-bootstrap4
+python-dotenv
+redis
