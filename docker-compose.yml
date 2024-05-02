@@ -27,6 +27,7 @@ services:
     depends_on:
       - pgdb
       - redis
+    stdin_open: true
 
 volumes:
   pgdbdata: null
