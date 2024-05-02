@@ -141,7 +141,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST', '')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', ''))
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 0))
 EMAIL_USE_TLS = bool(int(os.getenv('EMAIL_USE_TLS', '')))
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
@@ -157,7 +157,7 @@ LOGOUT_REDIRECT_URL = '/'
 
 LOGIN_URL = '/users/login'
 
-CACHE_ENABLED = int(os.getenv('CACHE_ENABLED', 1))
+CACHE_ENABLED = bool(int(os.getenv('CACHE_ENABLED', 1)))
 
 if CACHE_ENABLED:
     CACHES = {
