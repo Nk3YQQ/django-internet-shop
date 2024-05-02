@@ -1,2 +1,2 @@
 tests:
-	docker run --rm ${{ env.TEST_TAG }} python3 manage.py test
+	docker run --rm $(TEST_TAG) python3 manage.py test
