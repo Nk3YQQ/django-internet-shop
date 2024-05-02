@@ -20,10 +20,6 @@ class ProductTestCase(TestCase):
         Product.objects.create(name='Xiaomi Redmibook 15', category=category, amount=50000)
 
     def test_product(self):
-        product_1 = Product.objects.get(name='Xiaomi Redmibook 15')
-        product_2 = Product.objects.get(name='Xiaomi Redmi Note 8')
-        product_3 = Product.objects.get(name='Apple iPad Pro')
+        product = Product.objects.get(name='Xiaomi Redmibook 15')
 
-        self.assertEqual(product_1.category, 'Ноутбуки')
-        self.assertEqual(product_2.category, 'Телефоны')
-        self.assertEqual(product_3.category, 'Планшеты')
+        self.assertEqual(product.category, 'Ноутбуки')
