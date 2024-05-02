@@ -1,5 +1,5 @@
 docker-compose-run:
-	docker-compose up --build --abort-on-container-exit
+	docker-compose up --build
 	docker-compose exec app python manage.py runserver 0.0.0.0:8000
 
 tests:
