@@ -14,3 +14,9 @@ else
 fi
 
 sleep 5
+
+echo "Starting Django server..."
+python manage.py runserver 0.0.0.0:8000
+
+echo "Running tests..."
+python manage.py test
