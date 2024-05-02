@@ -24,12 +24,12 @@ load_dotenv(BASE_DIR / '.env')
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY', 'foo')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(int(os.getenv('DEBUG')))
+DEBUG = bool(int(os.getenv('DEBUG', '0')))
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(" ")
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split()
 
 # Application definition
 
@@ -85,11 +85,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'HOST': os.getenv('POSTGRES_HOST'),
-        'PORT': int(os.getenv('POSTGRES_PORT'))
+        'NAME': os.getenv('POSTGRES_DB', 'django_postgres'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'password'),
+        'HOST': os.getenv('POSTGRES_HOST', 'pgdb'),
+        'PORT': int(os.getenv('POSTGRES_PORT', 5432))
     }
 }
 
@@ -140,11 +140,11 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT'))
-EMAIL_USE_TLS = bool(int(os.getenv('EMAIL_USE_TLS')))
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_HOST = os.getenv('EMAIL_HOST', '')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', ''))
+EMAIL_USE_TLS = bool(int(os.getenv('EMAIL_USE_TLS', '')))
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
@@ -157,12 +157,12 @@ LOGOUT_REDIRECT_URL = '/'
 
 LOGIN_URL = '/users/login'
 
-CACHE_ENABLED = int(os.getenv('CACHE_ENABLED'))
+CACHE_ENABLED = int(os.getenv('CACHE_ENABLED', 1))
 
 if CACHE_ENABLED:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": os.getenv('CACHE_LOCATION'),
+            "LOCATION": os.getenv('CACHE_LOCATION', ''),
         }
     }
