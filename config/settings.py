@@ -88,7 +88,7 @@ DATABASES = {
         'NAME': os.getenv('POSTGRES_DB', 'django_postgres'),
         'USER': os.getenv('POSTGRES_USER', 'postgres'),
         'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'password'),
-        'HOST': os.getenv('POSTGRES_HOST', 'pgdb'),
+        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
         'PORT': int(os.getenv('POSTGRES_PORT', 5432))
     }
 }
