@@ -17,7 +17,7 @@ services:
   app:
     build: .
     container_name: app
-    command: ./docker-entrypoint.sh
+    command: sh -c "sleep 10 && ./docker-entrypoint.sh"
     env_file:
       - ./.env.dev
     volumes:
