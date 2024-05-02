@@ -1,2 +1,8 @@
+docker-compose-run:
+	docker-compose up --build --abort-on-container-exit
+
 tests:
-	docker run --rm $(TEST_TAG) python3 manage.py test
+	docker-compose exec app python3 manage.py test
+
+clean-up:
+	docker-compose down --volumes
