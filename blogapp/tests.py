@@ -9,5 +9,5 @@ class BlogTestCase(TestCase):
 
     def test_blog(self):
         blog = Blog.objects.get(title='Название')
-        self.assertEquals(blog.body, 'Содержимое')
-        self.assertEquals(blog.is_published, True)
+        self.assertEqual(blog.body, 'Содержимое')
+        self.assertEqual(blog.is_published, True)

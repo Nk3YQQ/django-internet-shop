@@ -9,6 +9,6 @@ class UserTestCase(TestCase):
 
     def test_user(self):
         user = User.objects.get(email='test.testov@mail.ru')
-        self.assertEquals(user.first_name, 'Test')
-        self.assertEquals(user.last_name, 'Testov')
-        self.assertEquals(user.email, 'test.testov@mail.ru')
+        self.assertEqual(user.first_name, 'Test')
+        self.assertEqual(user.last_name, 'Testov')
+        self.assertEqual(user.email, 'test.testov@mail.ru')

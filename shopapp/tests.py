@@ -29,6 +29,6 @@ class ProductTestCase(TestCase):
         product_2 = Product.objects.get(name='Xiaomi Redmi Note 8')
         product_3 = Product.objects.get(name='Apple iPad Pro')
 
-        self.assertEquals(product_1.category, 'Ноутбуки')
-        self.assertEquals(product_2.category, 'Телефоны')
-        self.assertEquals(product_3.category, 'Планшеты')
+        self.assertEqual(product_1.category, 'Ноутбуки')
+        self.assertEqual(product_2.category, 'Телефоны')
+        self.assertEqual(product_3.category, 'Планшеты')
