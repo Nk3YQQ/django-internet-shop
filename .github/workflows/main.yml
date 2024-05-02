@@ -27,8 +27,6 @@ jobs:
           load: true
           tags: ${{ env.TEST_TAG }}
 
-      - run: export $(grep -v '^#' .env.dev | xargs)
-
       - run: make tests
 
       - name: Build and push
