@@ -12,11 +12,3 @@ if ! python manage.py shell -c "from django.contrib.auth.models import Group; Gr
 else
     echo "'Moderator' group already exists."
 fi
-
-sleep 5
-
-echo "Starting Django server..."
-python manage.py runserver 0.0.0.0:8000
-
-echo "Running tests..."
-python manage.py test
