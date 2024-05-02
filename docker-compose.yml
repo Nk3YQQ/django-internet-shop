@@ -4,7 +4,7 @@ services:
     image: postgres:latest
     container_name: pgdb
     env_file:
-      - ./.env
+      - ./.env.dev
     volumes:
       - pgdbdata:/var/lib/postgresql/data
 
@@ -19,7 +19,7 @@ services:
     container_name: app
     command: ./docker-entrypoint.sh
     env_file:
-      - ./.env
+      - ./.env.dev
     volumes:
       - .:/usr/src/app
     ports:
