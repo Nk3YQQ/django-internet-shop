@@ -10,7 +10,7 @@ class CategoryTestCase(TestCase):
 
     def test_category(self):
         categories_count = Category.objects.count()
-        self.assertEquals(categories_count, 2)
+        self.assertEqual(categories_count, 2)
 
 
 class ProductTestCase(TestCase):
@@ -22,4 +22,4 @@ class ProductTestCase(TestCase):
     def test_product(self):
         product = Product.objects.get(name='Xiaomi Redmibook 15')
 
-        self.assertEqual(product.category, 'Ноутбуки')
+        self.assertEqual(product.category.name, 'Ноутбуки')
