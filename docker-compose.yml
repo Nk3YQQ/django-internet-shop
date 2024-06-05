@@ -6,7 +6,6 @@ services:
     env_file:
       - .env
     volumes:
-      - ./postgres/init.sql:/dockerr-entrypoint-initdb.d/init.sql
       - pgdbdata:/var/lib/postgresql/data
 
   redis:
@@ -18,7 +17,7 @@ services:
   app:
     build: .
     container_name: app
-    command: sh -c "sleep 5 && ./dev/docker-entrypoint.sh"
+    command: sh -c "sleep 5 && ./docker-entrypoint.sh"
     env_file:
       - .env
     volumes:

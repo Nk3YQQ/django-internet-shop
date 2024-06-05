@@ -125,10 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
-STATICFILES_DIRS = (
-    BASE_DIR / 'static',
-)
+STATIC_ROOT = BASE_DIR / 'static',
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
@@ -139,11 +136,11 @@ MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.getenv('EMAIL_HOST', '')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', 0))
-EMAIL_USE_TLS = bool(int(os.getenv('EMAIL_USE_TLS', 1)))
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT'))
+EMAIL_USE_TLS = bool(int(os.getenv('EMAIL_USE_TLS')))
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
