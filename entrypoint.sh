@@ -1,7 +1,7 @@
 #!/bin/sh
 
 echo "Applying migrations..."
-python manage.py migrate
+python3 manage.py migrate
 echo "Migrations applied successfully."
 
 echo "Checking if 'Moderator' group exists..."
@@ -12,4 +12,9 @@ if ! python manage.py shell -c "from django.contrib.auth.models import Group; Gr
 else
     echo "'Moderator' group already exists."
 fi
+
+echo "Applying collectstatic..."
+python manage.py collectstatic --noinput
+
+echo "Run server..."
 python3 manage.py runserver 0.0.0.0:8000
