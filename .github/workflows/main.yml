@@ -40,10 +40,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: SSH and Git pull
+      - name: Set up SSH private key
         uses: webfactory/ssh-agent@v0.9.0
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Connect to server and git pull
         env:
           DEPLOY_HOST: ${{ DEPLOY_HOST }}
           DEPLOY_USER: ${{ DEPLOY_USER }}
