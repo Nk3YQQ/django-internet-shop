@@ -50,6 +50,6 @@ jobs:
         env:
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-          PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
+          PROJECT_PATH: /var/www/html/django-internet-shop/
         run: |
           ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST && cd $PROJECT_PATH && git pull
