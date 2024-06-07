@@ -34,8 +34,19 @@ jobs:
       - name: Clean up
         run: make clean-up
 
-      - name: Trigger deploy.yml
-        uses: peter-evans/repository-dispatch@v3
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
         with:
-          token: ${{ secrets.TOKEN }}
-          event-type: trigger-deploy-workflow
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_LOGIN }} << 'EOF'
+            cd ${{ secrets.PROJECT_PASS }}
+            git pull origin main
+          EOF
