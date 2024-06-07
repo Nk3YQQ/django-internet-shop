@@ -1,4 +1,5 @@
-Django
+Django==4.2
+gunicorn
 flake8
 pillow
 psycopg2-binary
