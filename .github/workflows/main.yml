@@ -48,7 +48,7 @@ jobs:
 
       - name: Connect to server and git pull
         run: |
-          ssh -o StrictHostKeyChecking=no {{ secrets.DEPLOY_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_HOST }} << 'EOF'
             cd ${{ secrets.PROJECT_PATH }}
             git pull
           EOF
