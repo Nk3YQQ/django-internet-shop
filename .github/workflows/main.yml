@@ -51,4 +51,6 @@ jobs:
           ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_HOST }} << 'EOF'
             cd ${{ secrets.PROJECT_PATH }}
             git pull
+            make stop
+            make build-and-run
           EOF
