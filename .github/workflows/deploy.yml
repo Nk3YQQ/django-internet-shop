@@ -7,6 +7,8 @@ on:
   pull_request:
     branches:
       - 'main'
+  repository_dispatch:
+    types: [ trigger-deploy-workflow ]
 
 jobs:
   deploy:

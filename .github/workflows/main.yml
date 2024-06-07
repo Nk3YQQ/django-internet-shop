@@ -33,3 +33,9 @@ jobs:
 
       - name: Clean up
         run: make clean-up
+
+      - name: Trigger deploy.yml
+        uses: peter-evans/repository-dispatch@v3
+        with:
+          token: ${{ secrets.TOKEN }}
+          event-type: trigger-deploy-workflow
