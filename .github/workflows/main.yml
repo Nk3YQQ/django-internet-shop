@@ -52,4 +52,6 @@ jobs:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
         run: |
+          echo "Connected to $DEPLOY_HOST as $DEPLOY_USER"
+          echo "Project path: $PROJECT_PATH"
           ssh -o StrictHostKeyChecking=no -t $DEPLOY_USER@$DEPLOY_HOST 'cd $PROJECT_PATH && git pull'
