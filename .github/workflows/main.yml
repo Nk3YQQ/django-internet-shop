@@ -52,4 +52,4 @@ jobs:
           DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
         run: |
-          ssh $DEPLOY_USER@$DEPLOY_HOST "cd $PROJECT_PATH && git pull"
+          ssh -o StrictHostKeyChecking=no $DEPLOY_USER@$DEPLOY_HOST "cd $PROJECT_PATH && git pull"
