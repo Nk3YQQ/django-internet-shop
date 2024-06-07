@@ -16,4 +16,3 @@ urlpatterns = [
     path('edit/<int:pk>/', ProductUpdateView.as_view(), name='product_edit'),
     path('activity/<int:pk>/', toggle_material, name='toggle_material')
 ]
-

@@ -28,8 +28,8 @@ class UserRegistration(CreateView):
         if form.is_valid():
             send_mail(
                 subject='Добро пожаловать на сайт!',
-                message=f'Приветствую Вас! Вы зарегистрировались на сайте E&I Company. Здесь вы можете найти любую '
-                        f'технику для работы на вкус',
+                message='Приветствую Вас! Вы зарегистрировались на сайте E&I Company. '
+                        'Здесь вы можете найти любую технику для работы на вкус',
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[new_user.email],
             )
