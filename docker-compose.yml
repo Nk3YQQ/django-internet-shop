@@ -43,5 +43,5 @@ services:
 
 volumes:
   pgdbdata:
-  static_volume:
-  media_volume:
+#  static_volume:
+#  media_volume:
