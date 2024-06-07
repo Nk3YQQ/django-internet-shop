@@ -28,5 +28,18 @@ services:
       - pgdb
       - redis
 
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - static_volume:/app/static
+      - media_volume:/app/media
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+
 volumes:
-  pgdbdata: null
+  pgdbdata:
+  static_volume:
+  media_volume:
