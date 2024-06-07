@@ -47,8 +47,8 @@ jobs:
 
       - name: Connect to server and git pull
         env:
-          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
+          DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
           PROJECT_PATH: ${{ secrets.PROJECT_PATH }}
         run: |
           ssh $DEPLOY_USER@$DEPLOY_HOST "cd $PROJECT_PATH && git pull"
