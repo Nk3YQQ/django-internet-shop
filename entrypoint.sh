@@ -17,4 +17,4 @@ echo "Applying collectstatic..."
 python manage.py collectstatic --noinput
 
 echo "Run server..."
-python3 manage.py runserver 0.0.0.0:8000
+gunicorn --config gunicorn_config.py config.wsgi:application
