@@ -8,7 +8,7 @@ class CategoryTestCase(TestCase):
         Category.objects.create(name='Планшеты')
         Category.objects.create(name='Телефоны')
 
-    def test_category(self):
+    def test_category_list(self):
         categories_count = Category.objects.count()
         self.assertEqual(categories_count, 2)
 
@@ -19,7 +19,14 @@ class ProductTestCase(TestCase):
 
         Product.objects.create(name='Xiaomi Redmibook 15', category=category, amount=50000)
 
-    def test_product(self):
+    def test_get_product(self):
         product = Product.objects.get(name='Xiaomi Redmibook 15')
 
         self.assertEqual(product.category.name, 'Ноутбуки')
+
+    def test_update_product(self):
+        product = Product.objects.get(name='Xiaomi Redmibook 15')
+
+        product.name = 'Xiaomi Redmi 8 Pro'
+
+        self.assertEqual(product.name, 'Xiaomi Redmi 8 Pro')
