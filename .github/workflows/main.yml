@@ -33,24 +33,3 @@ jobs:
 
       - name: Clean up
         run: make clean-up
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Set up SSH private key
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          ssh-known-hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
-
-      - name: Connect to server and git pull
-        run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.DEPLOY_HOST }} << 'EOF'
-            cd ${{ secrets.PROJECT_PATH }}
-            git pull
-            make stop
-            make build-and-run
-          EOF
