@@ -133,10 +133,13 @@ class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView)
 @login_required
 def toggle_material(request, pk):
     material = get_object_or_404(Product, pk=pk)
+
     if material.is_published:
         material.is_published = False
+
     else:
         material.is_published = True
 
     material.save()
+
     return redirect(reverse('shopapp:main'))
