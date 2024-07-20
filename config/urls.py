@@ -20,10 +20,12 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    # App
     path('admin/', admin.site.urls),
-    path('', include('shopapp.urls', namespace='shopapp')),
-    path('materials/', include('blogapp.urls', namespace='blogapp')),
-    path('users/', include('users.urls', namespace='users'))
+    path('', include('products.urls', namespace='products')),
+    path('materials/', include('blog.urls', namespace='blog')),
+    path('users/', include('users.urls', namespace='users')),
+    path('api/', include('api.urls')),
 ]
 
 if settings.DEBUG:
