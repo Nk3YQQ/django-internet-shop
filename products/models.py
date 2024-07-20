@@ -9,7 +9,7 @@ NULLABLE = {'blank': True, 'null': True}
 class Product(models.Model):
     name = models.CharField(max_length=50, verbose_name='Наименование')
     content = models.TextField(verbose_name='Описание', **NULLABLE)
-    image = models.ImageField(upload_to='shopapp/', verbose_name='Изображение', **NULLABLE)
+    image = models.ImageField(upload_to='products/', verbose_name='Изображение', **NULLABLE)
     category = models.ForeignKey('Category', null=True, on_delete=models.CASCADE, verbose_name='Категория')
     amount = models.IntegerField(
         verbose_name='Цена за покупку',
@@ -32,7 +32,7 @@ class Product(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=50, verbose_name='Наименование', unique=True)
-    image = models.ImageField(upload_to='shopapp/', verbose_name='Изображение', **NULLABLE)
+    image = models.ImageField(upload_to='products/', verbose_name='Изображение', **NULLABLE)
     content = models.TextField(verbose_name='Описание', **NULLABLE)
 
     def __str__(self):

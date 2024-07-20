@@ -1,4 +1,4 @@
-{% extends 'shopapp/base.html' %}
+{% extends 'products/base.html' %}
 {% load my_tags %}
 {% block content %}
 <div class="search">
@@ -15,10 +15,10 @@
                 <h5 class="card-title mt-2">{{ object.name }}</h5>
                 <p class="card-text">{{ object.amount }} ₽</p>
                 <p class="card-text">{{ object.version.name|check_version }}</p>
-                <a href="{% url 'shopapp:one_good' object.pk %}" class="btn btn-primary btn-block">Подробнее</a>
-                {% if perms.shopapp.change_product %}
-                <a href="{% url 'shopapp:product_edit' object.pk %}" class="btn btn-outline-primary btn-block mt-2">Редактировать</a>
-                <a href="{% url 'shopapp:toggle_material' object.pk %}" class="btn btn-outline-warning btn-block mt-2">Деактивировать</a>
+                <a href="{% url 'products:product_retrieve' object.pk %}" class="btn btn-primary btn-block">Подробнее</a>
+                {% if perms.products.change_product %}
+                <a href="{% url 'products:product_edit' object.pk %}" class="btn btn-outline-primary btn-block mt-2">Редактировать</a>
+                <a href="{% url 'products:toggle_material' object.pk %}" class="btn btn-outline-warning btn-block mt-2">Деактивировать</a>
                 {% endif %}
             </div>
         </div>
@@ -38,7 +38,7 @@
                 <h5 class="card-title mt-2">{{ hidden_object.name }}</h5>
                 <p class="card-text">{{ hidden_object.amount }} ₽</p>
                 <p class="card-text">{{ hidden_object.version.name|check_version }}</p>
-                <a href="{% url 'shopapp:toggle_material' hidden_object.pk %}"
+                <a href="{% url 'products:toggle_material' hidden_object.pk %}"
                    class="btn btn-outline-warning btn-block mt-2">Активировать</a>
             </div>
         </div>

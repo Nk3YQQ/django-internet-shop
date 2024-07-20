@@ -1,10 +1,10 @@
-{% extends 'shopapp/base.html' %}
+{% extends 'products/base.html' %}
 {% load my_tags %}
 {% block content %}
 <div class="col-12 mt-5">
     <div class="row">
         <div class="col-6" align="center">
-            <img class="good_logo" src="{{ object.image| mymedia }}">
+            <img class="good_logo" src="{{ object.image|mymedia }}">
         </div>
         <div class="col-6">
             <div class="card">

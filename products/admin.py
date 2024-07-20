@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from shopapp.models import Category, Product, Version
+from products.models import Category, Product, Version
 
 
 @admin.register(Category)

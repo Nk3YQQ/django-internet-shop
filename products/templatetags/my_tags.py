@@ -4,11 +4,11 @@ from django.contrib.auth.models import Group
 register = template.Library()
 
 
-@register.filter()
+@register.filter
 def mymedia(val):
     if val:
         return f'/media/{val}'
-    return '/media/shopapp/not_found.jpeg'
+    return '/media/products/not_found.jpeg'
 
 
 @register.filter()

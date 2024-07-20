@@ -1,12 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.forms import inlineformset_factory
-from django.http import Http404
+from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
-from shopapp.models import Category, Product, Version
+from products.models import Category, Product, Version
 from .forms import ProductForm, VersionForm
 from .services import get_cache_for_product_detail, get_cache_for_category
 
@@ -40,17 +40,21 @@ class ProductListView(BaseProductListView):
     pass
 
 
-class ProductCategoryListView(BaseProductListView):
+class CategoryProductListView(BaseProductListView):
     def get_queryset(self):
         queryset = super().get_queryset()
+
         queryset = queryset.filter(category_id=self.kwargs.get('pk'))
+
         return queryset
 
 
 class UserProducts(BaseProductListView):
     def get_queryset(self):
         queryset = super().get_queryset()
+
         queryset = queryset.filter(user_id=self.request.user)
+
         return queryset
 
 
@@ -61,6 +65,7 @@ class CategoryListView(LoginRequiredMixin, ListView):
         context_data = super().get_context_data(**kwargs)
 
         object_list = get_cache_for_category(self.get_queryset())
+
         context_data['object_list'] = object_list
 
         return context_data
@@ -73,6 +78,7 @@ class ProductDetailView(LoginRequiredMixin, DetailView):
         context_data = super().get_context_data(**kwargs)
 
         product = get_cache_for_product_detail(self.object, self.object.pk)
+
         context_data['object'] = product
 
         return context_data
@@ -85,13 +91,17 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
         context['category_list'] = Category.objects.all()
+
         return context
 
     def form_valid(self, form):
-        self.object = form.save()
-        self.object.user = self.request.user
-        self.object.save()
+        instance = form.save()
+
+        instance.user = self.request.user
+
+        instance.save()
 
         return super().form_valid(form)
 
@@ -99,35 +109,59 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 class ProductUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
-    permission_required = 'shopapp.change_product'
+    permission_required = 'products.change_product'
 
     def get_object(self, queryset=None):
-        self.object = super().get_object(queryset)
-        if self.object.user != self.request.user and not self.request.user.is_staff:
-            raise Http404
-        return self.object
+        instance = super().get_object(queryset)
+
+        if instance.user != self.request.user and not self.request.user.is_staff:
+            return HttpResponseForbidden("You do not have permission to access this resource.")
+
+        return instance
 
     def get_success_url(self):
-        return reverse('shopapp:product_edit', args=[self.kwargs.get('pk')])
+        return reverse('products:product_edit', args=[self.kwargs.get('pk')])
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data()
+
         VersionFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+
         if self.request.method == 'POST':
             formset = VersionFormset(self.request.POST, instance=self.object)
+
         else:
             formset = VersionFormset(instance=self.object)
+
         context_data['formset'] = formset
+
         return context_data
 
     def form_valid(self, form):
         context_data = self.get_context_data()
+
         formset = context_data['formset']
-        self.object = form.save()
+
+        instance = form.save()
+
         if formset.is_valid():
-            formset.instance = self.object
+            formset.instance = instance
+
             formset.save()
+
         return super().form_valid(form)
+
+
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
+    model = Product
+
+    def get_object(self, queryset=None):
+        instance = super().get_object(queryset)
+
+        if instance.user != self.request.user:
+            return HttpResponseForbidden("You do not have permission to access this resource.")
+
+        return instance
 
 
 @login_required
@@ -142,4 +176,4 @@ def toggle_material(request, pk):
 
     material.save()
 
-    return redirect(reverse('shopapp:main'))
+    return redirect(reverse('products:product_list'))
