@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <h3>Добро пожаловать в интернет магазин E&I Electronix!</h3>
+    <p>Для завершения регистрации Вам необходимо активировать аккаунт:</p>
+    <a href="http://{{ domain }}{% url 'users:registration_activate' token=token %}">Активировать аккаунт</a>
+</body>
+</html>

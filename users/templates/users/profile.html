@@ -1,4 +1,4 @@
-{% extends 'shopapp/base.html' %}
+{% extends 'products/base.html' %}
 
 {% load crispy_forms_tags %}
 {% load users_tags %}
@@ -18,7 +18,7 @@
                 </div>
                 {% if intent == 'edit' %}
                 <div class="card-footer">
-                    <a href="{% url 'users:respassword' %}" class="btn btn-danger btn-block">Сгенерировать пароль</a>
+                    <a href="{% url 'users:reset_password' %}" class="btn btn-danger btn-block">Сгенерировать пароль</a>
                 </div>
                 {% endif %}
             </div>
