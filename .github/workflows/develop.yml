@@ -32,4 +32,4 @@ jobs:
         run: make linters
 
       - name: Clean up
-        run: make clean-up
+        run: make clean
