@@ -9,3 +9,7 @@ crispy-bootstrap4
 python-dotenv
 redis
 coverage
+djangorestframework
+djangorestframework-simplejwt
+drf-spectacular
+django-filter
