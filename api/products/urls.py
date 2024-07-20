@@ -1,8 +1,8 @@
 from django.urls import path
 
-from api.shopapp.views import (ProductCreateAPIView, CategoryListAPIView, ProductRetrieveAPIView,
-                               CategoryProductListView, ProductListAPIView, ProductUpdateAPIView, ProductDestroyAPIView,
-                               CategoryCreateAPIView)
+from api.products.views import (ProductCreateAPIView, CategoryListAPIView, ProductRetrieveAPIView,
+                                CategoryProductListView, ProductListAPIView, ProductUpdateAPIView, ProductDestroyAPIView,
+                                CategoryCreateAPIView)
 
 urlpatterns = [
     # Categories

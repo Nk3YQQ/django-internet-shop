@@ -4,7 +4,7 @@ from rest_framework.test import APITestCase
 from users.services import create_user, get_user
 
 
-class ShopAppAPITestCase(APITestCase):
+class ProductsAPITestCase(APITestCase):
     """ Тестирование API основного приложения """
 
     def setUp(self) -> None:
