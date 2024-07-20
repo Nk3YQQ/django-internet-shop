@@ -1,5 +1,5 @@
 run:
-	docker-compose up --build -d
+	docker-compose -f docker-compose.dev.yml up --build -d
 
 entrypoint:
 	python3 manage.py migrate
@@ -11,7 +11,7 @@ entrypoint:
 	gunicorn --config gunicorn_config.py config.wsgi:application
 
 tests:
-	docker-compose exec -T app python3 manage.py test
+	docker-compose -f docker-compose.dev.yml exec -T app python3 manage.py test
 
 linters:
 	docker-compose exec -T app flake8 blog/
@@ -22,4 +22,4 @@ stop:
 	docker-compose down
 
 clean:
-	docker-compose down --volumes
+	docker-compose -f docker-compose.dev.yml down --volumes
