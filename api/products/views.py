@@ -3,7 +3,7 @@ from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 
 from api.permissions import IsModerator, IsOwner
-from api.shopapp.serializers import CategorySerializer, ProductSerializer
+from api.products.serializers import CategorySerializer, ProductSerializer
 from products.models import Category, Product
 
 
