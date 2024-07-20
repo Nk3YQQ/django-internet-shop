@@ -5,12 +5,12 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 
-from blogapp.forms import BlogFrom
-from blogapp.models import Blog
-from shopapp.views import LoginRequiredMixin
+from blog.forms import BlogFrom
+from blog.models import Blog
+from products.views import LoginRequiredMixin
 
 
-class MaterialListView(LoginRequiredMixin, ListView):
+class BlogListView(LoginRequiredMixin, ListView):
     model = Blog
 
     def get_queryset(self):
@@ -29,19 +29,19 @@ class MaterialListView(LoginRequiredMixin, ListView):
         return context_data
 
 
-class UserMaterialListView(MaterialListView):
+class UserBlogListView(BlogListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(user_id=self.request.user)
         return queryset
 
 
-class MaterialDetailView(LoginRequiredMixin, DetailView):
+class BlogDetailView(LoginRequiredMixin, DetailView):
     model = Blog
 
     def get_object(self, queryset=None):
-        self.object = super().get_object(queryset)
-        self.object.view_count += 1
+        instance = super().get_object(queryset)
+        instance.view_count += 1
         if self.object.view_count == 100:
             send_mail('Поздравляем со 100 просмотрами!',
                       f'Ваше объявление "{self.object.title}" достигло 100 просмотров!',
@@ -49,14 +49,14 @@ class MaterialDetailView(LoginRequiredMixin, DetailView):
                       [self.request.user],
                       fail_silently=False
                       )
-        self.object.save()
-        return self.object
+        instance.save()
+        return instance
 
 
-class MaterialCreateView(LoginRequiredMixin, CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Blog
     form_class = BlogFrom
-    success_url = reverse_lazy('blogapp:main')
+    success_url = reverse_lazy('blog:blog_list')
 
     def form_valid(self, form):
         if form.is_valid():
@@ -67,26 +67,28 @@ class MaterialCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class MaterialUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+class BlogUpdateView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     model = Blog
-    permission_required = 'blogapp.change_material'
+    permission_required = 'blog.change_material'
     fields = ('title', 'body', 'preview')
 
     def get_success_url(self):
-        return reverse('blogapp:one_material', args=[self.kwargs.get('pk')])
+        return reverse('blog:blog_retrieve', args=[self.kwargs.get('pk')])
 
 
-class MaterialDeleteView(LoginRequiredMixin, DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     model = Blog
-    success_url = reverse_lazy('blogapp:main')
+    success_url = reverse_lazy('blog:blog_list')
 
 
 def toggle_material(request, pk):
     material = get_object_or_404(Blog, pk=pk)
+
     if material.is_published:
         material.is_published = False
     else:
         material.is_published = True
 
     material.save()
-    return redirect(reverse('blogapp:main'))
+
+    return redirect(reverse('blog:blog_list'))
