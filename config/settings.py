@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+from datetime import timedelta
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -41,11 +42,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
+    'drf_spectacular',
+    'django_filters',
+
     'crispy_forms',
     'crispy_bootstrap4',
 
-    'shopapp',
-    'blogapp',
+    'products',
+    'blog',
     'users',
 ]
 
@@ -163,3 +168,25 @@ if CACHE_ENABLED:
             "LOCATION": os.getenv('CACHE_LOCATION', ''),
         }
     }
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_SCHEMA_CLASS': (
+        'drf_spectacular.openapi.AutoSchema'
+    )
+}
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1)
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Internet Shop API',
+    'DESCRIPTION': 'Internet Shop for other apps!',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SORT_OPERATIONS': True
+}

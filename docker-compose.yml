@@ -18,7 +18,7 @@ services:
   app:
     build: .
     container_name: app
-    command: ./entrypoint.sh
+    command: make entrypoint
     env_file:
       - .env
     volumes:
