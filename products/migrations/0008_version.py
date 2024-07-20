@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shopapp', '0007_category_image'),
+        ('products', '0007_category_image'),
     ]
 
     operations = [
@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 ('number', models.IntegerField(verbose_name='Номер версии')),
                 ('name', models.CharField(max_length=100, verbose_name='Название версии')),
                 ('is_current_version', models.BooleanField(default=True, verbose_name='Является текущей версией?')),
-                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='shopapp.product', verbose_name='Товар')),
+                ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='products.product', verbose_name='Товар')),
             ],
             options={
                 'verbose_name': 'версия',

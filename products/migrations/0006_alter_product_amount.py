@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shopapp', '0003_alter_product_content_squashed_0005_alter_product_amount_alter_product_image'),
+        ('products', '0003_alter_product_content_squashed_0005_alter_product_amount_alter_product_image'),
     ]
 
     operations = [

@@ -6,10 +6,10 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    replaces = [('shopapp', '0003_alter_product_content'), ('shopapp', '0004_alter_category_options_alter_product_options_and_more'), ('shopapp', '0005_alter_product_amount_alter_product_image')]
+    replaces = [('products', '0003_alter_product_content'), ('products', '0004_alter_category_options_alter_product_options_and_more'), ('products', '0005_alter_product_amount_alter_product_image')]
 
     dependencies = [
-        ('shopapp', '0002_alter_category_content'),
+        ('products', '0002_alter_category_content'),
     ]
 
     operations = [
@@ -39,6 +39,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='product',
             name='image',
-            field=models.ImageField(blank=True, null=True, upload_to='shopapp/', verbose_name='Изображение'),
+            field=models.ImageField(blank=True, null=True, upload_to='products/', verbose_name='Изображение'),
         ),
     ]
