@@ -23,7 +23,7 @@ jobs:
         run: echo "ENV_STAGE=${{ secrets.ENV_STAGE }}" > .env
           
       - name: Build and run docker-compose
-        run: make build-and-run
+        run: make run
         
       - name: Run tests
         run: make tests
