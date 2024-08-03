@@ -1,4 +1,7 @@
-run:
+run-test:
+	docker-compose up --build -d
+
+run-test:
 	docker-compose -f docker-compose.dev.yml up --build -d
 
 entrypoint:
