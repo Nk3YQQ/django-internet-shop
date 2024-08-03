@@ -1,4 +1,4 @@
-run-test:
+run:
 	docker-compose up --build -d
 
 run-test:
