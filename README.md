@@ -1,7 +1,7 @@
 # Структура проекта
 ```
 django-internet-shop/
-|—— api/ # Приложение для API
+|—— api/ # Приложение API
     |—— blog/ # API для блога 
     |—— products/ # API для продуктов
     |—— users/ # API для пользователей 
